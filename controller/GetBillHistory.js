@@ -1,6 +1,5 @@
 const getData = require('../database/dbOperations')
 const conn = require('../config/dbConfig')
-const logger = require('../loggerConfig/logger')
 const Getamount = require('../Helper/gst')
 
 var GetBillHistory = async function (req, res) {
@@ -14,11 +13,14 @@ var GetBillHistory = async function (req, res) {
             total_cost += result.final_amount
         }
         res.status(200).json({ "Bill_HIstory": getBillHistory, "amount": total_cost })
-        logger.info("info", { "{method}": req.method, "{url}": req.url, "{data}": req.body, "statusCode": 200 })
+        let resObj = {"method":req.method,"url":req.url, "data":req.body, "status":200};
+        console.log("API Response - ",resObj);
     }
     catch (err) {
         res.status(500).json({ "statuscode": 500 })
-        logger.error("Internal Server Error", { "{method}": req.method, "{url}": req.url, "{data}": req.query, "statusCode": 500 })
+        let resObj = {"method":req.method,"url":req.url, "data":req.query, "status":500};
+        console.log("API Response - ",resObj);
+        console.log("error",err)
     }
 
 }

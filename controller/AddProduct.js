@@ -1,7 +1,5 @@
 const conn = require('../config/dbConfig')
 const add = require('../database/dbOperations')
-const logger = require('../loggerConfig/logger')
-const logger_err = require('../loggerConfig/errorLogConfig')
 
 var AddProduct = async function (req, res) {
     try {
@@ -9,17 +7,20 @@ var AddProduct = async function (req, res) {
         let added = await addNew.addProduct(conn)
         if (added.affectedRows) {
             res.status(201).json({ "statuscode": 201 })
-            logger.info("info", { "{method}": req.method, "{url}": req.url, "{data}": req.body, "statusCode": 201 })
+            let resObj = {"method":req.method,"url":req.url, "data":req.body, "status":201};
+            console.log("API Response - ",resObj);
         }
         else {
-            res.status(406).json({ "Error": 406 })
-            logger_err.error("Verification faild", { "{method}": req.method, "{url}": req.url, "{data}": req.body, "statusCode": 406 })
+            res.status(400).json({ "Error": 400 })
+            let resObj = {"method":req.method,"url":req.url, "data":req.body, "status":400};
+            console.log("API Response - ",resObj);
         }
 
     }
     catch (err) {
         res.status(500).json({ "Error": 500 })
-        logger_err.error("Internal Server Error", { "{method}": req.method, "{url}": req.url, "{data}": req.body, "statusCode": 500 })
+        let resObj = {"method":req.method,"url":req.url, "data":req.body, "status":500};
+        console.log("API Response - ",resObj);
     }
 }
 

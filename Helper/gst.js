@@ -1,10 +1,7 @@
 const Gstbill = require('../database/dbOperations')
 const conn = require('../config/dbConfig')
-const logger = require('../loggerConfig/logger')
 
 var gst = async function (productValues, data) {
-    // console.log("data", productValues)
-    // console.log("data2", data)
     var Qty = data.qty
     var codes = data.products_code
     var final_amount = 0
