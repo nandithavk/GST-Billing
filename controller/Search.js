@@ -1,23 +1,24 @@
 const conn = require('../config/dbConfig')
 const search_details = require('../database/dbOperations')
-const logger = require('../loggerConfig/logger')
-const logger_err = require('../loggerConfig/errorLogConfig')
 
 var Search = async function (req, res) {
     try {
-        let searched = await search_details.search(conn, req.query.serach_element)
+        let searched = await search_details.search(conn, req.query.search_element)
         if (searched != 0) {
             res.status(200).json(searched)
-            logger.info("info", { "{method}": req.method, "{url}": req.url, "{data}": req.query, "statusCode": 200 })
+            let resObj = {"method":req.method,"url":req.url, "data":req.query, "status":200};
+            console.log("API Response - ",resObj);
         }
         else {
-            res.status(406).json({ "status": 406 })
-            logger_err.error("Invalid Input", { "{method}": req.method, "{url}": req.url, "{data}": req.query, "statusCode": 406 })
+            res.status(406).json({ "status": 400 })
+            let resObj = {"method":req.method,"url":req.url, "data":req.query, "status":400};
+            console.log("API Response - ",resObj);
         }
     }
     catch (err) {
         res.status(500).json({ "statuscode": 500 })
-        logger_err.error("Internal Server Error", { "{method}": req.method, "{url}": req.url, "{data}": req.query, "statusCode": 500 })
+        let resObj = {"method":req.method,"url":req.url, "data":req.query, "status":500};
+        console.log("API Response - ",resObj);
     }
 }
 

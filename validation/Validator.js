@@ -1,5 +1,3 @@
-const { query } = require("../loggerConfig/logger")
-
 class Validator {
     static validAdd(req, res, next) {
         var code = req.body.product_code
@@ -12,23 +10,25 @@ class Validator {
                 next()
             }
             else {
-                res.status(406).json({ statuscode: 406 })
+                res.status(400).json({ statuscode: 400 })
+                console.log("Bad Request")
             }
         }
         else {
-            res.status(406).json({ statuscode: 406 })
+            res.status(400).json({ statuscode: 400 })
         }
     }
     static validSearch(req, res, next) {
-        let item = req.query.serach_element
+        let item = req.query.search_element
         if (item > 0) {
             next()
         }
         else if (item.length && isNaN(parseInt(item))) {
+            console.log("search")
             next()
         }
         else {
-            res.status(406).json({ "statuscode": 406 })
+            res.status(400).json({ "statuscode": 400 })
         }
     }
 
@@ -48,7 +48,7 @@ class Validator {
             next()
         }
         else {
-            res.status(406).json({ "statuscode": 406 })
+            res.status(400).json({ "statuscode": 400 })
         }
     }
     static validTimestamp(req, res, next) {
@@ -56,7 +56,8 @@ class Validator {
             next()
         }
         else {
-            res.status(406).json({ "statscode ": 406 })
+            console.log("error",req.query.end)
+            res.status(400).json({ "statscode ": 400 })
         }
     }
 }

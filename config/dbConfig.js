@@ -1,18 +1,17 @@
 const mysql = require('mysql')
-const logger = require('../loggerConfig/logger')
 var conn = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "root123",
-    database: "gstapi"
+    password: "gstbilling@123",
+    database: "gstbilling"
 })
 
 conn.connect(function (err) {
     if (err) {
-        logger.error("Database Connection faild")
+        console.log("Database Connection faild",err)
     }
     else {
-        logger.info("Database Connected successfully")
+        console.log("Database Connected successfully")
     }
 
 })

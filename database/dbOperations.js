@@ -59,48 +59,7 @@ class Gstbill {
             })
         })
     }
-    static sessionAdd(conn, data, session_id) {
-        return new Promise((resolve, reject) => {
-            conn.query("INSERT INTO session_table (session_id, user_id) values(?, ?)", [session_id, data], (err, reslt) => {
-                if (err) {
-                    reject(err)
-                }
-                resolve(reslt)
-            })
-        })
-    }
-    static sessionread(conn, session_id) {
-        return new Promise((resolve, reject) => {
-            conn.query("SELECT l.role, s.user_id, s.session_time FROM login as l INNER JOIN session_table as s on l.username = s.user_id WHERE session_id = ?", session_id, (err, reslt) => {
-                if (err) {
-                    reject(err)
-                }
-                resolve(reslt)
-            })
-        })
-    }
-    static sessionDel(conn, session_id) {
-        return new Promise((resolve, reject) => {
-            conn.query("DELETE FROM session_table WHERE session_id = ?", session_id, (err, reslt) => {
-                if (err) {
-                    reject(err)
-                }
-                resolve(reslt)
-            })
-        })
-    }
-
-    editProduct(conn) {
-        return new Promise((resolve, reject) => {
-            conn.query('UPDATE  products SET product_name = ?, product_price = ?, product_gst = ? WHERE product_code = ?', [this.product_name,
-            this.product_price, this.product_gst, this.product_code], (err, reslt) => {
-                if (err) {
-                    reject(err)
-                }
-                resolve(reslt)
-            })
-        })
-    }
+   
 }
 
 module.exports = Gstbill
